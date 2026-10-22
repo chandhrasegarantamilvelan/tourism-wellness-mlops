@@ -14,16 +14,16 @@ import streamlit as st
 # load the model from the same folder as this script (works regardless of cwd)
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "best_tourism_model_v1.joblib")
 
+# set_page_config must be the FIRST Streamlit command in the script
+st.set_page_config(page_title="Wellness Tourism Package Predictor")
 
 @st.cache_resource
 def load_model():
     return joblib.load(MODEL_PATH)
 
-
 model = load_model()
 
-st.set_page_config(page_title="Wellness Tourism Package Predictor", page_icon="🧳")
-st.title("🧳 Wellness Tourism Package Predictor")
+st.title("Wellness Tourism Package Predictor")
 st.write(
     "Predict whether a customer is likely to purchase the new Wellness Tourism "
     "Package. Fill in the customer details below and click **Predict**."
@@ -90,6 +90,6 @@ if st.button("Predict"):
     pred = model.predict(input_df)[0]
     proba = model.predict_proba(input_df)[0][1]
     if pred == 1:
-        st.success(f"✅ Likely to PURCHASE the Wellness Package (probability {proba:.2%})")
+        st.success(f"Likely to PURCHASE the Wellness Package (probability {proba:.2%})")
     else:
-        st.info(f"❌ Unlikely to purchase the Wellness Package (probability {proba:.2%})")
+        st.info(f"Unlikely to purchase the Wellness Package (probability {proba:.2%})")
